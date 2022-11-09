@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="cardRepor card w-50 mt-5">
+    <div *ngIf="repositories.length === 0">
+      {{ noRepor }}
+    </div>
+    <div *ngFor="let repos of repositories">
+      <ul>
+        <li>{{ repos.name }}</li>
+      </ul>
+      <div>
+        {{ repos.description }}
+      </div>
+      <!-- <div>
+        <form>
+          <div class="form-group">
+            <label >Nova Issue</label>
+            <textarea
+              class="form-control"
+              rows="3"
+            ></textarea>
+          </div>
+        </form>
+
+      </div> -->
+      <hr />
+    </div>
+  </div>
+</div>
