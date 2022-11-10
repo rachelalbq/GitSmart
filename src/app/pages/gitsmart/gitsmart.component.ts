@@ -1,3 +1,4 @@
+import { IssuesService } from './../../shared/services/issues.service';
 import { RepositoriesService } from './../../shared/services/repositories.service';
 import { iResponseUser } from '../../shared/interfaces/user.interface';
 import { iReponseRepor } from '../../shared/interfaces/repor.interface';
@@ -5,6 +6,7 @@ import { UsersService } from './../../shared/services/users.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { iResponseListarIssue } from 'src/app/shared/interfaces/issue.interface';
 
 @Component({
   selector: 'app-gitsmart',
@@ -14,9 +16,9 @@ import Swal from 'sweetalert2';
 export class GitsmartComponent implements OnInit {
   formUser!: FormGroup;
 
-  visible: boolean = true;
-
   repositories!: iReponseRepor | any;
+
+  issues?: iResponseListarIssue;
 
   users!: iResponseUser | any;
 
@@ -26,7 +28,8 @@ export class GitsmartComponent implements OnInit {
   constructor(
     private userService: UsersService,
     private form: FormBuilder,
-    private reporsitoriesService: RepositoriesService
+    private reporsitoriesService: RepositoriesService,
+    private issueService: IssuesService
   ) {}
 
   ngOnInit(): void {
@@ -41,8 +44,6 @@ export class GitsmartComponent implements OnInit {
         this.users = res;
         this.foto = res.avatar_url;
         this.searchRepor(text);
-        this.visible = false;
-        console.log(this.users);
       },
       error: (error) => {
         Swal.fire({
@@ -58,8 +59,7 @@ export class GitsmartComponent implements OnInit {
     this.reporsitoriesService.getrepositories(user).subscribe({
       next: (res: iReponseRepor) => {
         this.repositories = res;
-
-        console.log(res);
+        this.searchIssue(user);
       },
       error: (error) => {
         Swal.fire({
@@ -69,5 +69,24 @@ export class GitsmartComponent implements OnInit {
         });
       },
     });
+  }
+
+  searchIssue(user: string) {
+    for (let i = 0; i < this.repositories.length; i++) {
+      let repo = this.repositories[i].name;
+      this.issueService.searchIssues(user, repo).subscribe({
+        next: (res: iResponseListarIssue) => {
+          this.issues = res;
+          console.log('show', res);
+        },
+        error: (error) => {
+          Swal.fire({
+            title: 'Erro',
+            icon: 'error',
+            text: 'Não foi possível mostrar repositórios.',
+          });
+        },
+      });
+    }
   }
 }

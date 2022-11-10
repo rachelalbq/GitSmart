@@ -41,7 +41,10 @@
       </div>
     </div>
     <div *ngIf="repositories">
-      <app-repositories [repositories]="repositories"></app-repositories>
+      <app-repositories
+        [repositories]="repositories"
+        [issues]="issues"
+      ></app-repositories>
     </div>
   </div>
 </div>
