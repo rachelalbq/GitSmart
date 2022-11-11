@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { iResponseListarIssue } from 'src/app/shared/interfaces/issue.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-gitsmart',
@@ -21,6 +22,8 @@ export class GitsmartComponent implements OnInit {
   issues?: iResponseListarIssue;
 
   users!: iResponseUser | any;
+
+  repositorie!: any
 
   foto: string =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXjaeoLrxQxqc3US06hi8YnqR9u5laX9VG9-z3Nij047Xs18wyJjvLgi5AqJKNYUek_pk&usqp=CAU';
@@ -39,17 +42,19 @@ export class GitsmartComponent implements OnInit {
   }
 
   searchUser(text: string) {
+ console.log(environment.TOKEN)
     this.userService.searchUser(text).subscribe({
       next: (res: iResponseUser) => {
         this.users = res;
         this.foto = res.avatar_url;
+        
         this.searchRepor(text);
       },
       error: (error) => {
         Swal.fire({
           title: 'Erro',
           icon: 'error',
-          text: 'Verifique os dados e tente novamente.',
+          text: 'Indisponível.',
         });
       },
     });
@@ -59,6 +64,7 @@ export class GitsmartComponent implements OnInit {
     this.reporsitoriesService.getrepositories(user).subscribe({
       next: (res: iReponseRepor) => {
         this.repositories = res;
+        
         this.searchIssue(user);
       },
       error: (error) => {
@@ -72,9 +78,13 @@ export class GitsmartComponent implements OnInit {
   }
 
   searchIssue(user: string) {
-    for (let i = 0; i < this.repositories.length; i++) {
-      let repo = this.repositories[i].name;
-      this.issueService.searchIssues(user, repo).subscribe({
+
+     
+      this.repositories.map((repositorie: any) => {
+        this.repositorie = repositorie.name
+        
+      })
+      this.issueService.searchIssues(user, this.repositorie).subscribe({
         next: (res: iResponseListarIssue) => {
           this.issues = res;
           console.log('show', res);
@@ -89,4 +99,4 @@ export class GitsmartComponent implements OnInit {
       });
     }
   }
-}
+

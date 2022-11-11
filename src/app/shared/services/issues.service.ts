@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, timeout } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { appSettings } from '../settings/app-settings';
 import { ConfigService } from './config.service';
 
@@ -10,9 +11,10 @@ import { ConfigService } from './config.service';
 export class IssuesService {
   private _headers = {
     Accept: 'application/vnd.github.v3+json',
-    Authorization: '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',
+    Authorization: environment.TOKEN
   };
 
+  
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
   searchIssues(user: string, repo: string): Observable<any> {
@@ -25,5 +27,6 @@ export class IssuesService {
         timeout(5000),
         catchError(this.configService.handleError)
       );
+      
   }
 }

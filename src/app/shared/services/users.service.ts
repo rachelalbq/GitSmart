@@ -5,6 +5,7 @@ import { catchError, retry, timeout } from 'rxjs/operators';
 import { iResponseUser } from '../interfaces/user.interface';
 import { appSettings } from '../settings/app-settings';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ import { Observable } from 'rxjs';
 export class UsersService {
   private _headers = {
     Accept: 'application/vnd.github.v3+json',
-    Authorization: '',
+    Authorization: environment.TOKEN
   };
 
   constructor(private http: HttpClient, private configService: ConfigService) {}

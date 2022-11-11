@@ -4,6 +4,7 @@ import { appSettings } from '../settings/app-settings';
 import { HttpClient } from '@angular/common/http';
 import { iReponseRepor } from './../interfaces/repor.interface';
 import { ConfigService } from './config.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { ConfigService } from './config.service';
 export class RepositoriesService {
   private _headers = {
     Accept: 'application/vnd.github.v3+json',
-    Authorization: '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',
+    Authorization: environment.TOKEN,
   };
 
   constructor(private http: HttpClient, private configService: ConfigService) {}

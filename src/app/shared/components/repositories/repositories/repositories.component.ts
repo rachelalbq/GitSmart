@@ -16,6 +16,8 @@ export class RepositoriesComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.repositories.length);
+
+    console.log('ooooook',this.issues);
+    
   }
 }
