@@ -11,10 +11,9 @@ import { ConfigService } from './config.service';
 export class IssuesService {
   private _headers = {
     Accept: 'application/vnd.github.v3+json',
-    Authorization: environment.TOKEN
+    Authorization: environment.TOKEN,
   };
 
-  
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
   searchIssues(user: string, repo: string): Observable<any> {
@@ -27,6 +26,5 @@ export class IssuesService {
         timeout(5000),
         catchError(this.configService.handleError)
       );
-      
   }
 }

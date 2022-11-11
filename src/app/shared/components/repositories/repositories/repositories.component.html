@@ -4,17 +4,48 @@
       {{ noRepor }}
     </div>
     <div *ngFor="let repos of repositories">
-      <ul>
-        <li>Projeto :{{ repos.name }}</li>
-      </ul>
-      <div>
-        Descrição
-        {{ repos.description }}
+      <h5>Projeto : {{ repos.name }}</h5>
+      <div class="description-project">
+        Descrição:
+        {{ repos.description ? repos.description : "Sem descrição" }}
       </div>
       <div>
-        <p>Issus</p>
-        <div *ngFor="let issue of issues">
-          {{ issue }}
+        <p>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="toggle()"
+            (click)="serchIssues(repos.name)"
+          >
+            <span>Clique para acesso as issues</span>
+            <i class="bi bi-binoculars"></i>
+          </button>
+        </p>
+        <div *ngIf="repos.name == repositorie">
+          <div class="card">
+            <i class="close-issue bi bi-x" (click)="close()"></i>
+            <div class="card-body">
+              <div *ngFor="let issue of issues">
+                <div>
+                  <p>Título:</p>
+                  <span>
+                    {{
+                      issue.description ===
+                      "Pull requests that update a dependency file"
+                        ? "Não possui"
+                        : issue.title
+                    }}</span
+                  >
+                </div>
+                {{
+                  issue.description ===
+                  "Pull requests that update a dependency file"
+                    ? "Possui apenas pull request"
+                    : issue.body
+                }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <hr />

@@ -4,4 +4,19 @@
   padding: 10px;
   overflow: scroll;
   height: 25em;
+
+  h5 {
+    text-align: center;
+  }
+}
+
+.close-issue {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+  font-size: 25px;
+}
+
+.description-project{
+  
 }

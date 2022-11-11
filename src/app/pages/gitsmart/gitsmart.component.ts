@@ -23,7 +23,7 @@ export class GitsmartComponent implements OnInit {
 
   users!: iResponseUser | any;
 
-  repositorie!: any
+  repositorie!: any;
 
   foto: string =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXjaeoLrxQxqc3US06hi8YnqR9u5laX9VG9-z3Nij047Xs18wyJjvLgi5AqJKNYUek_pk&usqp=CAU';
@@ -42,12 +42,13 @@ export class GitsmartComponent implements OnInit {
   }
 
   searchUser(text: string) {
- console.log(environment.TOKEN)
+    console.log(environment.TOKEN);
     this.userService.searchUser(text).subscribe({
       next: (res: iResponseUser) => {
-        this.users = res;
+        this.users = res.login;
         this.foto = res.avatar_url;
-        
+        console.log('uuuu', res);
+
         this.searchRepor(text);
       },
       error: (error) => {
@@ -64,8 +65,8 @@ export class GitsmartComponent implements OnInit {
     this.reporsitoriesService.getrepositories(user).subscribe({
       next: (res: iReponseRepor) => {
         this.repositories = res;
-        
-        this.searchIssue(user);
+
+        // this.searchIssue(user);
       },
       error: (error) => {
         Swal.fire({
@@ -77,26 +78,23 @@ export class GitsmartComponent implements OnInit {
     });
   }
 
-  searchIssue(user: string) {
+  // searchIssue(user: string) {
+  //   this.repositories.map((repositorie: any) => {
+  //     this.repositorie = repositorie.name;
+  //     console.log(this.repositorie);
+  //     this.issueService.searchIssues(user, this.repositorie).subscribe({
+  //       next: (res: iResponseListarIssue) => {
 
-     
-      this.repositories.map((repositorie: any) => {
-        this.repositorie = repositorie.name
-        
-      })
-      this.issueService.searchIssues(user, this.repositorie).subscribe({
-        next: (res: iResponseListarIssue) => {
-          this.issues = res;
-          console.log('show', res);
-        },
-        error: (error) => {
-          Swal.fire({
-            title: 'Erro',
-            icon: 'error',
-            text: 'Não foi possível mostrar repositórios.',
-          });
-        },
-      });
-    }
-  }
-
+  //         console.log('show', res);
+  //       },
+  //       error: (error) => {
+  //         Swal.fire({
+  //           title: 'Erro',
+  //           icon: 'error',
+  //           text: 'Não foi possível mostrar repositórios.',
+  //         });
+  //       },
+  //     });
+  //   });
+  // }
+}
