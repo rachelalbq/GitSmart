@@ -13,11 +13,10 @@ import Swal from 'sweetalert2';
 export class RepositoriesComponent implements OnInit {
   @Input() repositories!: iReponseRepor | any;
   @Input() users!: iResponseUser | any;
-  // @Input() issues!: iResponseListarIssue | any;
   issues!: iResponseListarIssue | any;
   noRepor: string = 'Sem repositórios';
-  public isCollapsed = false;
-  repositorie!: any;
+ 
+  repositorie!: string;
 
   constructor(private issueService: IssuesService) {}
 
@@ -25,29 +24,30 @@ export class RepositoriesComponent implements OnInit {
     console.log('user', this.users);
   }
 
-  toggle() {
-    this.isCollapsed = true;
-  }
 
   close() {
-    this.isCollapsed = false;
     this.repositorie = '';
   }
 
   serchIssues(repo: string) {
     this.issueService.searchIssues(this.users, repo).subscribe({
-      next: (res: iResponseListarIssue) => {
+      next: (res: iResponseListarIssue |  any) => {
         this.repositorie = repo;
         this.issues = res;
-        console.log('show', this.issues);
+  
       },
       error: (error) => {
         Swal.fire({
           title: 'Erro',
           icon: 'error',
-          text: 'Não foi possível mostrar repositórios.',
+          text: 'Não foi possível mostrar issues.',
         });
       },
     });
   }
+
+
+ 
 }
+
+

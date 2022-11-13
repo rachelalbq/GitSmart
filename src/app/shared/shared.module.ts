@@ -5,10 +5,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RepositoriesComponent } from './components/repositories/repositories/repositories.component';
+import { FormNewIssueComponent } from './components/form-new-issue/form-new-issue.component';
 
 @NgModule({
   bootstrap: [],
-  declarations: [RepositoriesComponent],
+  declarations: [RepositoriesComponent, FormNewIssueComponent],
   imports: [
     CommonModule,
     NgbModule,

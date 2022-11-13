@@ -9,46 +9,37 @@
         Descrição:
         {{ repos.description ? repos.description : "Sem descrição" }}
       </div>
-      <div>
-        <p>
+        <div>
           <button
             type="button"
             class="btn btn-outline-secondary"
-            (click)="toggle()"
-            (click)="serchIssues(repos.name)"
-          >
+            (click)="serchIssues(repos.name)">
             <span>Clique para acesso as issues</span>
             <i class="bi bi-binoculars"></i>
           </button>
-        </p>
+        </div>
         <div *ngIf="repos.name == repositorie">
           <div class="card">
             <i class="close-issue bi bi-x" (click)="close()"></i>
-            <div class="card-body">
-              <div *ngFor="let issue of issues">
+            <app-form-new-issue [users]="users" [repositorie]="repositorie"></app-form-new-issue>
+            <div *ngFor="let issue of issues">
+                <div class="issue-wrapper"  *ngIf="issues.length >  0">
                 <div>
-                  <p>Título:</p>
-                  <span>
-                    {{
-                      issue.description ===
-                      "Pull requests that update a dependency file"
-                        ? "Não possui"
-                        : issue.title
-                    }}</span
-                  >
+                  <p>Título: {{issue.title }}</p>
+                  <span>Autor: {{issue.author_association}}</span>
                 </div>
-                {{
-                  issue.description ===
-                  "Pull requests that update a dependency file"
-                    ? "Possui apenas pull request"
-                    : issue.body
-                }}
+                <div>
+                  <p>Descrição: {{issue.body}}</p>
+                </div>
+              </div >
+              </div>
+              <div *ngIf="issues.length === 0" style="margin: 0 auto;">
+                Sem issues e pulls
               </div>
             </div>
           </div>
-        </div>
+          <hr />
       </div>
-      <hr />
     </div>
   </div>
-</div>
+

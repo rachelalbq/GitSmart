@@ -42,7 +42,6 @@ export class GitsmartComponent implements OnInit {
   }
 
   searchUser(text: string) {
-    console.log(environment.TOKEN);
     this.userService.searchUser(text).subscribe({
       next: (res: iResponseUser) => {
         this.users = res.login;

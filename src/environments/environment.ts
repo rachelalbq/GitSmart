@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  TOKEN: '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',
+  TOKEN: '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',
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
