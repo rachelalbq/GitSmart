@@ -15,8 +15,11 @@ export class RepositoriesComponent implements OnInit {
   @Input() users!: iResponseUser | any;
   issues!: iResponseListarIssue | any;
   noRepor: string = 'Sem repositórios';
- 
+  issueEdit!: number;
+  issueTitulo!: string;
+  issueText!: string;
   repositorie!: string;
+  visible: boolean = false;
 
   constructor(private issueService: IssuesService) {}
 
@@ -24,17 +27,15 @@ export class RepositoriesComponent implements OnInit {
     console.log('user', this.users);
   }
 
-
   close() {
     this.repositorie = '';
   }
 
   serchIssues(repo: string) {
     this.issueService.searchIssues(this.users, repo).subscribe({
-      next: (res: iResponseListarIssue |  any) => {
+      next: (res: iResponseListarIssue | any) => {
         this.repositorie = repo;
         this.issues = res;
-  
       },
       error: (error) => {
         Swal.fire({
@@ -46,8 +47,24 @@ export class RepositoriesComponent implements OnInit {
     });
   }
 
+  openEditIssue(issue: number, issueTitulo: string, issueText: string) {
+    this.issueEdit = issue;
+    this.issueTitulo = issueTitulo;
+    this.issueText = issueText;
+  }
 
- 
+  issueReload(event: boolean, repo: string) {
+    if (event === true) {
+      this.serchIssues(repo);
+      this.close();
+    }
+  }
+
+  issueReloadEdit(event: boolean, repo: string) {
+    if (event === true) {
+      this.serchIssues(repo);
+      this.close();
+      this.issueEdit = 0;
+    }
+  }
 }
-
-

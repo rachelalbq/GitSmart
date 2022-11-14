@@ -1,33 +1,32 @@
 <div class="form-wrapper">
-  <p>
-    <i (click)="openForm()" class="smaller heading bi bi-plus-square"></i>
-    <span class="add-issue">Adicionar issue</span>
-  </p>
-  <div *ngIf="visible">
-    <form [formGroup]="formIssue">
+  <form *ngFor="let issue of issues" [formGroup]="formEditIssue">
+    <div *ngIf="issue.number === issueEdit">
       <input
         type="text"
         class="form-control"
         placeholder="Título"
         formControlName="issueTitle"
+        [value]="issue.title"
       />
       <textarea
-        class="form-control"
+        class="issue-body form-control"
         rows="3"
         formControlName="issueBody"
+        [value]="issue.body"
       ></textarea>
       <button
         (click)="
-          addIssue(
-            this.formIssue.value.issueTitle,
-            this.formIssue.value.issueBody
+          patchIssue(
+            issue.number,
+            this.formEditIssue.value.issueTitle,
+            this.formEditIssue.value.issueBody
           )
         "
         type="button"
         class="btn btn-secondary btn-sm"
       >
-        Adicionar
+        Atualizar
       </button>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>

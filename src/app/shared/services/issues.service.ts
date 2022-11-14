@@ -2,7 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { iResponseCreateIssue, iResponseListarIssue, newIssue } from '../interfaces/issue.interface';
+import {
+  iResponseCreateIssue,
+  iResponseListarIssue,
+  newIssue,
+} from '../interfaces/issue.interface';
 import { appSettings } from '../settings/app-settings';
 import { ConfigService } from './config.service';
 
@@ -15,13 +19,21 @@ export class IssuesService {
     Authorization: environment.TOKEN,
   };
 
+  private _headersTwo = {
+    Accept: 'application/vnd.github+json',
+    Authorization: environment.TOKEN,
+  };
+
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
   searchIssues(user: string, repo: string): Observable<iResponseListarIssue> {
     return this.http
-      .get<iResponseListarIssue>(appSettings.URL_ISSUES + user + '/' + repo + '/' + 'issues', {
-        headers: this._headers,
-      })
+      .get<iResponseListarIssue>(
+        appSettings.URL_ISSUES + user + '/' + repo + '/' + 'issues',
+        {
+          headers: this._headers,
+        }
+      )
       .pipe(
         retry(3),
         timeout(5000),
@@ -29,11 +41,48 @@ export class IssuesService {
       );
   }
 
-  CreateIssues(user: string, repo: string, request: newIssue): Observable<iResponseCreateIssue> {
+  CreateIssues(
+    user: string,
+    repo: string,
+    request: newIssue
+  ): Observable<iResponseCreateIssue> {
     return this.http
-      .post<iResponseCreateIssue>(appSettings.URL_ISSUES + user + '/' + repo + '/' + 'issues', request, {
-        headers: this._headers,
-      })
+      .post<iResponseCreateIssue>(
+        appSettings.URL_ISSUES + user + '/' + repo + '/' + 'issues',
+        request,
+        {
+          headers: this._headersTwo,
+        }
+      )
+      .pipe(
+        retry(3),
+        timeout(5000),
+        catchError(this.configService.handleError)
+      );
+  }
+
+  patchIssues(
+    user: string,
+    repo: string,
+    issue: number,
+    request: newIssue
+  ): Observable<any> {
+    return this.http
+      .patch<any>(
+        appSettings.URL_ISSUES +
+          user +
+          '/' +
+          repo +
+          '/' +
+          'issues' +
+          '/' +
+          issue,
+        request,
+
+        {
+          headers: this._headersTwo,
+        }
+      )
       .pipe(
         retry(3),
         timeout(5000),
