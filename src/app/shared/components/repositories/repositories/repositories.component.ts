@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class RepositoriesComponent implements OnInit {
   @Input() repositories!: iReponseRepor | any;
-  @Input() users!: iResponseUser | any;
+  @Input() users!: string;
   issues!: iResponseListarIssue | any;
   noRepor: string = 'Sem repositórios';
   issueEdit!: number;
@@ -66,5 +66,30 @@ export class RepositoriesComponent implements OnInit {
       this.close();
       this.issueEdit = 0;
     }
+  }
+
+  LockIssue(issue: number) {
+    let request = {
+      owner: this.users,
+      repo: this.repositorie,
+      issue_number: issue,
+      lock_reason: 'off-topic',
+    };
+
+    this.issueService
+      .LockIssues(this.users, this.repositorie, issue, request)
+      .subscribe({
+        next: (res: any | any) => {
+          this.serchIssues(this.repositorie);
+          console.log('lock', res);
+        },
+        error: (error) => {
+          Swal.fire({
+            title: 'Erro',
+            icon: 'error',
+            text: 'Não foi possível bloquear issue.',
+          });
+        },
+      });
   }
 }

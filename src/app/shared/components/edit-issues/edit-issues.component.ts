@@ -14,7 +14,7 @@ import { IssuesService } from '../../services/issues.service';
 export class EditIssuesComponent implements OnInit {
   @Input() issues!: iResponseListarIssue | any;
   @Input() issueEdit!: number;
-  @Input() users!: iResponseUser | any;
+  @Input() users!: string;
   @Input() repositorie!: iReponseRepor | any;
   @Input() issueTitulo!: string;
   @Input() issueText!: string;
@@ -44,6 +44,8 @@ export class EditIssuesComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.issueEdit = 0;
+          console.log('edit', res);
+
           this.issuesReloadEdit.emit(true);
         },
         error: (error) => {

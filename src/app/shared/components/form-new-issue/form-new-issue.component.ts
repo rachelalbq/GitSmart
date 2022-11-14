@@ -16,7 +16,7 @@ import { IssuesService } from '../../services/issues.service';
 })
 export class FormNewIssueComponent implements OnInit {
   visible: boolean = false;
-  @Input() users!: iResponseUser | any;
+  @Input() users!: string;
   @Input() repositorie!: iReponseRepor | any;
   @Output() issuesReload: EventEmitter<boolean> = new EventEmitter();
 

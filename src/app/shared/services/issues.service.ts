@@ -4,7 +4,9 @@ import { catchError, Observable, retry, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
   iResponseCreateIssue,
+  iResponseEdit,
   iResponseListarIssue,
+  LockIssue,
   newIssue,
 } from '../interfaces/issue.interface';
 import { appSettings } from '../settings/app-settings';
@@ -66,9 +68,9 @@ export class IssuesService {
     repo: string,
     issue: number,
     request: newIssue
-  ): Observable<any> {
+  ): Observable<iResponseEdit> {
     return this.http
-      .patch<any>(
+      .patch<iResponseEdit>(
         appSettings.URL_ISSUES +
           user +
           '/' +
@@ -79,6 +81,36 @@ export class IssuesService {
           issue,
         request,
 
+        {
+          headers: this._headersTwo,
+        }
+      )
+      .pipe(
+        retry(3),
+        timeout(5000),
+        catchError(this.configService.handleError)
+      );
+  }
+
+  LockIssues(
+    user: string,
+    repo: string,
+    issue: number,
+    request: LockIssue
+  ): Observable<any> {
+    return this.http
+      .put<any>(
+        appSettings.URL_ISSUES +
+          user +
+          '/' +
+          repo +
+          '/' +
+          'issues' +
+          '/' +
+          issue +
+          '/' +
+          'lock',
+        request,
         {
           headers: this._headersTwo,
         }

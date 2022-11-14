@@ -48,7 +48,11 @@
                 </div>
               </div>
               <div class="icons">
-                <i class="bi bi-trash-fill" style="margin-right: 10px"></i>
+                <i
+                  (click)="LockIssue(issue.number)"
+                  class="bi bi-trash-fill"
+                  style="margin-right: 10px"
+                ></i>
                 <i
                   (click)="openEditIssue(issue.number, issue.title, issue.body)"
                   class="bi bi-pen-fill"

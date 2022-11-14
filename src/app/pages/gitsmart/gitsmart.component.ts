@@ -21,7 +21,7 @@ export class GitsmartComponent implements OnInit {
 
   issues?: iResponseListarIssue;
 
-  users!: iResponseUser | any;
+  users!: string;
 
   repositorie!: any;
 
