@@ -81,6 +81,11 @@ export class RepositoriesComponent implements OnInit {
       .subscribe({
         next: (res: any | any) => {
           this.serchIssues(this.repositorie);
+          Swal.fire({
+            title: 'Pronto',
+            icon: 'success',
+            text: 'Issue bloqueada',
+          });
           console.log('lock', res);
         },
         error: (error) => {
