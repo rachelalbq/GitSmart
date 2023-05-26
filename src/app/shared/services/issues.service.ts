@@ -29,13 +29,10 @@ export class IssuesService {
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
   searchIssues(user: string, repo: string): Observable<iResponseListarIssue> {
+    const url = `${appSettings.URL_ISSUES}${user}/${repo}/issues`;
+
     return this.http
-      .get<iResponseListarIssue>(
-        appSettings.URL_ISSUES + user + '/' + repo + '/' + 'issues',
-        {
-          headers: this._headers,
-        }
-      )
+      .get<iResponseListarIssue>(url, { headers: this._headers })
       .pipe(
         retry(3),
         timeout(5000),
@@ -43,19 +40,15 @@ export class IssuesService {
       );
   }
 
-  CreateIssues(
+  createIssues(
     user: string,
     repo: string,
     request: newIssue
   ): Observable<iResponseCreateIssue> {
+    const url = `${appSettings.URL_ISSUES}${user}/${repo}/issues`;
+
     return this.http
-      .post<iResponseCreateIssue>(
-        appSettings.URL_ISSUES + user + '/' + repo + '/' + 'issues',
-        request,
-        {
-          headers: this._headersTwo,
-        }
-      )
+      .post<iResponseCreateIssue>(url, request, { headers: this._headersTwo })
       .pipe(
         retry(3),
         timeout(5000),
@@ -69,22 +62,10 @@ export class IssuesService {
     issue: number,
     request: newIssue
   ): Observable<iResponseEdit> {
-    return this.http
-      .patch<iResponseEdit>(
-        appSettings.URL_ISSUES +
-          user +
-          '/' +
-          repo +
-          '/' +
-          'issues' +
-          '/' +
-          issue,
-        request,
+    const url = `${appSettings.URL_ISSUES}${user}/${repo}/issues/${issue}`;
 
-        {
-          headers: this._headersTwo,
-        }
-      )
+    return this.http
+      .patch<iResponseEdit>(url, request, { headers: this._headersTwo })
       .pipe(
         retry(3),
         timeout(5000),
@@ -98,23 +79,10 @@ export class IssuesService {
     issue: number,
     request: LockIssue
   ): Observable<any> {
+    const url = `${appSettings.URL_ISSUES}${user}/${repo}/issues/${issue}/lock`;
+
     return this.http
-      .put<any>(
-        appSettings.URL_ISSUES +
-          user +
-          '/' +
-          repo +
-          '/' +
-          'issues' +
-          '/' +
-          issue +
-          '/' +
-          'lock',
-        request,
-        {
-          headers: this._headersTwo,
-        }
-      )
+      .put<any>(url, request, { headers: this._headersTwo })
       .pipe(
         retry(3),
         timeout(5000),

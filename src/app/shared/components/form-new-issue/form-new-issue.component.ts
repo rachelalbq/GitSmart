@@ -44,7 +44,7 @@ export class FormNewIssueComponent implements OnInit {
     };
 
     this.issueService
-      .CreateIssues(this.users, this.repositorie, request)
+      .createIssues(this.users, this.repositorie, request)
       .subscribe({
         next: (res: iResponseCreateIssue) => {
           this.issuesReload.emit(true);

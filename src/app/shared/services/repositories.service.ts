@@ -17,11 +17,11 @@ export class RepositoriesService {
 
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
-  getrepositories(user: string): Observable<iReponseRepor> {
+  getRepositories(user: string): Observable<iReponseRepor> {
+    const url = `${appSettings.URL_GITHUB}${user}/repos`;
+
     return this.http
-      .get<iReponseRepor>(appSettings.URL_GITHUB + user + '/' + 'repos', {
-        headers: this._headers,
-      })
+      .get<iReponseRepor>(url, { headers: this._headers })
       .pipe(
         retry(3),
         timeout(5000),

@@ -46,8 +46,6 @@ export class GitsmartComponent implements OnInit {
       next: (res: iResponseUser) => {
         this.users = res.login;
         this.foto = res.avatar_url;
-        console.log('uuuu', res);
-
         this.searchRepor(text);
       },
       error: (error) => {
@@ -61,11 +59,9 @@ export class GitsmartComponent implements OnInit {
   }
 
   searchRepor(user: string) {
-    this.reporsitoriesService.getrepositories(user).subscribe({
+    this.reporsitoriesService.getRepositories(user).subscribe({
       next: (res: iReponseRepor) => {
         this.repositories = res;
-
-        // this.searchIssue(user);
       },
       error: (error) => {
         Swal.fire({
@@ -76,24 +72,4 @@ export class GitsmartComponent implements OnInit {
       },
     });
   }
-
-  // searchIssue(user: string) {
-  //   this.repositories.map((repositorie: any) => {
-  //     this.repositorie = repositorie.name;
-  //     console.log(this.repositorie);
-  //     this.issueService.searchIssues(user, this.repositorie).subscribe({
-  //       next: (res: iResponseListarIssue) => {
-
-  //         console.log('show', res);
-  //       },
-  //       error: (error) => {
-  //         Swal.fire({
-  //           title: 'Erro',
-  //           icon: 'error',
-  //           text: 'Não foi possível mostrar repositórios.',
-  //         });
-  //       },
-  //     });
-  //   });
-  // }
 }

@@ -1,21 +1,21 @@
 <div class="container">
-  <div class="cardRepor card w-50 mt-5">
+  <div class="cardRepor card mt-5">
     <div *ngIf="repositories.length === 0">
       {{ noRepor }}
     </div>
     <div *ngFor="let repos of repositories">
-      <h5>Projeto : {{ repos.name }}</h5>
+      <h5>Projeto: {{ repos.name }}</h5>
       <div class="description-project">
         Descrição:
         {{ repos.description ? repos.description : "Sem descrição" }}
       </div>
-      <div>
+      <div class="text-center mt-3">
         <button
           type="button"
           class="btn btn-outline-secondary"
           (click)="serchIssues(repos.name)"
         >
-          <span>Clique para acesso as issues</span>
+          <span>Clique para acessar as issues</span>
           <i class="binoc bi bi-binoculars"></i>
         </button>
       </div>
@@ -42,7 +42,7 @@
                 </div>
                 <div>
                   <p>
-                    <span class="issues-property">Descrição: </span>
+                    <span class="issues-property">Descrição:</span>
                     {{ issue.body ? issue.body : "Sem descrição" }}
                   </p>
                 </div>
@@ -71,7 +71,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="issues.length === 0" style="margin: 0 auto">
+          <div *ngIf="issues.length === 0" class="text-center">
             Sem issues e pulls
           </div>
         </div>

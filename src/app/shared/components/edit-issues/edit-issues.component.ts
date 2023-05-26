@@ -44,8 +44,6 @@ export class EditIssuesComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.issueEdit = 0;
-          console.log('edit', res);
-
           this.issuesReloadEdit.emit(true);
         },
         error: (error) => {

@@ -13,16 +13,16 @@ import { environment } from 'src/environments/environment';
 export class UsersService {
   private _headers = {
     Accept: 'application/vnd.github.v3+json',
-    Authorization: environment.TOKEN
+    Authorization: environment.TOKEN,
   };
 
   constructor(private http: HttpClient, private configService: ConfigService) {}
 
   searchUser(user: string): Observable<iResponseUser> {
+    const url = `${appSettings.URL_GITHUB}${user}`;
+
     return this.http
-      .get<iResponseUser>(appSettings.URL_GITHUB + user, {
-        headers: this._headers,
-      })
+      .get<iResponseUser>(url, { headers: this._headers })
       .pipe(
         retry(3),
         timeout(5000),

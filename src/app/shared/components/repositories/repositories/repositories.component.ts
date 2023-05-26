@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { iResponseListarIssue } from 'src/app/shared/interfaces/issue.interface';
 import { iReponseRepor } from 'src/app/shared/interfaces/repor.interface';
 import { iResponseUser } from 'src/app/shared/interfaces/user.interface';
+import { RepositoriesService } from 'src/app/shared/services/repositories.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -21,11 +22,12 @@ export class RepositoriesComponent implements OnInit {
   repositorie!: string;
   visible: boolean = false;
 
-  constructor(private issueService: IssuesService) {}
+  constructor(
+    private issueService: IssuesService,
+    private reporsitoriesService: RepositoriesService
+  ) {}
 
-  ngOnInit(): void {
-    console.log('user', this.users);
-  }
+  ngOnInit(): void {}
 
   close() {
     this.repositorie = '';
@@ -86,7 +88,6 @@ export class RepositoriesComponent implements OnInit {
             icon: 'success',
             text: 'Issue bloqueada',
           });
-          console.log('lock', res);
         },
         error: (error) => {
           Swal.fire({
