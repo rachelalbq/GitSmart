@@ -33,7 +33,7 @@ export class GitsmartComponent implements OnInit {
     private form: FormBuilder,
     private reporsitoriesService: RepositoriesService,
     private issueService: IssuesService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.formUser = this.form.group({
